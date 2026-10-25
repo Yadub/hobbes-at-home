@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+*.egg-info
+.venv
+
+# Frontend
+web/node_modules/
+web/openapi.json
+src/hobbes/web/static/
+
+# OS and tool caches
+.DS_Store
+.pytest_cache/
+.ruff_cache/

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- The app icon's source, full-bleed (iOS and Android round the corners themselves). Rendered to the
+       PNGs in web/public/icons by tools/render_icon.sh; web/public/icons/icon.svg is the same with its own
+       rounded corners. Hobbes, the owner's German Shepherd, in silhouette: sitting in a lit doorway at dusk,
+       ears up, tail on the floor. -->
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2d3f86"/><stop offset="1" stop-color="#121a3d"/></linearGradient>
+    <linearGradient id="light" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7a3"/><stop offset="1" stop-color="#ffa53d"/></linearGradient>
+    <radialGradient id="spill" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffb04a" stop-opacity="0.55"/><stop offset="1" stop-color="#ffb04a" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#wall)"/>
+  <ellipse cx="512" cy="852" rx="330" ry="80" fill="url(#spill)"/>
+  <path fill="url(#light)" d="M300 840 L300 470 C300 352 394 262 512 262 C630 262 724 352 724 470 L724 840 Z"/>
+  <g transform="translate(512 840) scale(0.85 0.94) translate(-500 -840)">
+    <path fill="#170f09" d="M628 840 C630 822 622 812 608 812 L610 700 C622 680 640 650 640 620 C640 586 630 552 622 524 C626 512 640 508 656 508 L690 502 C712 498 716 474 700 468 L652 452 C640 448 634 440 632 430 L610 350 Q603 330 590 346 L572 414 L566 356 Q558 336 548 354 L536 438 C526 454 518 470 514 486 C508 506 512 520 500 536 C470 580 440 616 424 660 C404 712 398 760 412 790 C384 806 344 812 312 818 C288 822 290 846 316 846 C360 846 400 842 430 840 L548 840 C556 826 548 814 534 814 C546 790 560 760 572 732 L576 840 Z"/>
+  </g>
+  <rect x="276" y="836" width="472" height="14" rx="7" fill="#0c1230" opacity="0.5"/>
+</svg>

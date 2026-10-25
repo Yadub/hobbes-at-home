@@ -1,0 +1,58 @@
+[project]
+name = "hobbes-at-home"
+version = "0.1.0"
+description = "A private home dashboard for your Mac: diet, health and an AI assistant, run by Claude or ChatGPT"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+authors = [{ name = "Yaduraj Bhageria" }]
+requires-python = ">=3.13"
+dependencies = [
+    "cryptography>=50.0",
+    "fastapi>=0.115.8",
+    "keyring>=25.0",
+    "python-multipart>=0.0.20",
+    "uvicorn>=0.30",
+    "websockets>=15",
+]
+
+[project.scripts]
+hobbes = "hobbes.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.12.19,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "hobbes"
+
+[dependency-groups]
+dev = [
+    "httpx2>=2.13.1",
+    "pyright>=1.1.390",
+    "pytest>=8.0",
+    "ruff>=0.8",
+]
+
+[tool.uv]
+# Only versions published before this date are installed, so a freshly published (and possibly
+# compromised) release can't slip in. Move it forward on purpose when upgrading.
+exclude-newer = "2026-10-03T00:00:00Z"
+
+[tool.ruff]
+line-length = 120
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.File", "fastapi.Form", "fastapi.Depends", "fastapi.Query"]
+
+[tool.pyright]
+include = ["src"]
+pythonVersion = "3.13"
+typeCheckingMode = "standard"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
