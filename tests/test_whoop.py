@@ -39,7 +39,7 @@ class FakeWhoop:
         path = urllib.parse.urlsplit(url).path.removeprefix("/developer")
         q = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query))
         if path == "/v2/user/profile/basic":
-            return 200, {"user_id": 7, "email": "owner@example.com", "first_name": "Yadu", "last_name": "B"}
+            return 200, {"user_id": 7, "email": "owner@example.com", "first_name": "Sam", "last_name": "Lee"}
         if path == "/v2/user/measurement/body":
             return 200, {"height_meter": 1.78, "weight_kilogram": self.weight, "max_heart_rate": 190}
         if path == "/v2/cycle":
@@ -101,7 +101,7 @@ def test_sign_in(conn, fake):
     url = whoop.start(conn)
     whoop.finish(conn, "code-1", dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query))["state"])
     s = whoop.status(conn)
-    assert s["connected"] and s["profile"]["first_name"] == "Yadu"
+    assert s["connected"] and s["profile"]["first_name"] == "Sam"
     assert secrets.get("whoop.client_secret") == "s3cret"  # in the Keychain (memory in tests), not the catalog
     assert "s3cret" not in str(list(conn.execute("SELECT * FROM settings")))
 

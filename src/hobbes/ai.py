@@ -35,8 +35,10 @@ _SLOTS = threading.BoundedSemaphore(2)
 # can use the ChatGPT apps on the owner's account (found on codex 0.162: 202 tools, Gmail send and delete
 # among them). Switched off with -c (an unknown --disable stops Codex), and checked against `codex features
 # list` once per Codex binary: a name it no longer knows means calls are refused, never run with it maybe on.
+# "shell_tool", "code_mode_host" and "unified_exec": the read-only sandbox still lets commands read the whole
+# disk, so a web page with injected instructions could read ~/.ssh or Codex's own sign-in (checked on 0.162).
 OFF = ("apps", "plugins", "remote_plugin", "multi_agent", "image_generation", "goals", "browser_use",
-       "computer_use", "in_app_browser")
+       "computer_use", "in_app_browser", "shell_tool", "code_mode_host", "unified_exec")
 _FEATURES_CHECKED: dict[str, str | None] = {}
 _STATUS_CACHE: dict[str, dict[str, Any]] = {}
 _PATH_EXTRA = ["/opt/homebrew/bin", "/usr/local/bin", str(Path.home() / ".local" / "bin")]
@@ -229,9 +231,9 @@ def features_problem(path: str) -> str | None:
         known = {line.split()[0] for line in r.stdout.splitlines() if line.strip()}
         missing = [f for f in OFF if f not in known]
         problem = None if r.returncode == 0 and not missing else (
-            f"This version of Codex doesn't have the switch {', '.join(missing) or '(none listed)'} the dashboard "
-            "uses to keep its AI away from your connected apps (Gmail, Calendar, Drive), so AI calls are paused "
-            "until the dashboard is updated for it.")
+            f"This version of Codex doesn't have the switch {', '.join(missing) or '(none listed)'} Hobbes at Home "
+            "uses to keep its AI away from your files and connected apps (Gmail, Calendar, Drive), so AI calls "
+            "are paused until Hobbes at Home is updated for it.")
     except (OSError, subprocess.SubprocessError) as e:
         problem = f"Codex's features couldn't be checked ({e}), so AI calls are paused."
     _FEATURES_CHECKED[key] = problem
@@ -303,7 +305,7 @@ def _call(cmd: list[str], stdin: str, work: Path, timeout: float, tool: str) -> 
 def _codex(path: str, work: Path, prompt: str, schema: dict | None, images: Any, search: bool,
            timeout: float) -> tuple[str, Any]:
     out = work / "answer.txt"
-    cmd = [path, "exec", "--ephemeral", "--skip-git-repo-check", "--ignore-user-config",
+    cmd = [path, "exec", "--ephemeral", "--skip-git-repo-check", "--ignore-user-config", "--ignore-rules",
            "--sandbox", "read-only", "--cd", str(work), "--output-last-message", str(out), "--color", "never"]
     for feature in OFF:
         cmd += ["--config", f"features.{feature}=false"]

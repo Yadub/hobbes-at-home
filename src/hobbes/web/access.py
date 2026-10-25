@@ -80,10 +80,13 @@ def host_name(value: str | None) -> str:
     return v.rsplit(":", 1)[0] if v.count(":") == 1 else v
 
 
+LOCAL_HOSTS = {"localhost", "127.0.0.1", "::1"}
+
+
 def host_allowed(host: str, extra: set[str]) -> bool:
     """Only names that really mean this Mac: localhost, its own tailnet name, its addresses. Not any
     *.ts.net name: another tailnet's machine isn't this Mac."""
-    if host in ("localhost", "127.0.0.1", "::1", "testserver") or host in extra:
+    if host in LOCAL_HOSTS or host in extra:
         return True
     try:
         ip = ipaddress.ip_address(host)

@@ -8,6 +8,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from hobbes import ai, db, region, secrets
+from hobbes.web import access
 from hobbes.web.app import create_app
 
 FAKE_CODEX = Path(__file__).parent / "fake_codex.py"
@@ -28,6 +29,7 @@ def scratch(tmp_path, monkeypatch):
     monkeypatch.delenv("HOBBES_CLAUDE_MODEL", raising=False)
     for fake in (FAKE_CODEX, FAKE_CLAUDE):
         fake.chmod(fake.stat().st_mode | stat.S_IXUSR)
+    monkeypatch.setattr(access, "LOCAL_HOSTS", access.LOCAL_HOSTS | {"testserver"})  # TestClient's host
     monkeypatch.setattr(region, "mac_country", lambda: None)  # the default region, not this Mac's
     ai._STATUS_CACHE.clear()
     ai._USAGE_CACHE.clear()

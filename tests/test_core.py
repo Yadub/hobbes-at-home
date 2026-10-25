@@ -115,6 +115,9 @@ def test_ask_text_and_search(scratch, conn, monkeypatch):
     assert ai.ask("hi", search=True, conn=conn) == "Just text."
     args = codex_calls(scratch)[0]["args"]
     assert args[args.index('web_search="live"') - 1] == "--config"
+    for feature in ("shell_tool", "code_mode_host", "unified_exec", "apps"):  # no commands, files or apps
+        assert f"features.{feature}=false" in args
+    assert "--ignore-rules" in args and "--ignore-user-config" in args
 
 
 def test_ask_failures_are_plain_and_recorded(conn, monkeypatch):

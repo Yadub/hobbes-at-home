@@ -79,7 +79,8 @@ if args[:1] == ["--version"]:
     sys.exit(0)
 if args[:2] == ["features", "list"]:  # FAKE_CODEX_FEATURES (comma-separated) replaces the real list
     names = os.environ.get("FAKE_CODEX_FEATURES", "apps,plugins,remote_plugin,multi_agent,image_generation,goals,"
-                           "browser_use,computer_use,in_app_browser,web_search_request").split(",")
+                           "browser_use,computer_use,in_app_browser,shell_tool,code_mode_host,unified_exec,"
+                           "web_search_request").split(",")
     for name in names:
         print(f"{name:<40} stable             true")
     sys.exit(0)

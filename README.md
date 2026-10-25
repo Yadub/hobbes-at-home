@@ -37,6 +37,8 @@ It's named after Hobbes, a German Shepherd.
   plan apply.
 - WHOOP data goes to the AI only after you turn on Share With the AI in Settings, WHOOP.
 - It sends nothing anywhere else: no analytics and no tracking.
+- Anyone at the Mac counts as you, and so does any app running on it: there is no password. Use it on
+  a Mac where you are the only user.
 
 ## What you need
 
@@ -154,7 +156,9 @@ Keychain Access.
 - **The AI is locked down.** Each call runs in an empty scratch folder with no saved session. It
   ignores your own Claude Code or Codex settings, plugins and MCP servers. It can't run commands or
   change files, and the only tool it gets is web search. It never sees the connected apps on your
-  ChatGPT account. Text from web pages is treated as information, never as instructions.
+  ChatGPT account. Text from web pages is treated as information, never as instructions. Even so, a
+  web page could try to trick the AI into sending what it was told to another site. So facts you mark
+  as secret are never sent to the AI.
 - **Not medical advice.** The numbers are estimates, from an AI and from your devices.
 - **Not affiliated** with Apple, WHOOP, Anthropic, OpenAI or Tailscale. Their names are trademarks of
   their owners.
